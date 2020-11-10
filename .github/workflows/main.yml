@@ -31,7 +31,7 @@ jobs:
           # Provide Checkmarx URL
           checkmarx_url: ${{secrets.CHECKMARX_URL}} 
           # Select a Checkmarx Team
-          team: /CxServer/GithubAction1
+          team: /CxServer/GitHubAction1
           # Provide Checkmarx Username
           checkmarx_username: ${{secrets.CHECKMARX_USERNAME}}
           # Provide Checkmarx Password
@@ -43,7 +43,7 @@ jobs:
           # Select an Application Name used by downstream bug tracker systems
           app: bodegit_github_action1
           # Select a Checkmarx Preset
-          preset: High and Medium #XSS and SQLi only # optional, default is Checkmarx Default
+          preset: XSS and SQLi only #High and Medium # optional, default is Checkmarx Default
           # Break build based on Checkmarx findings?
           #break_build: # optional
           # Incremental Scans?
