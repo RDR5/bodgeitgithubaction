@@ -23,14 +23,14 @@ jobs:
         export BRANCH=$(basename "$GITHUB_REF")
         ~/cxcli/runCxConsole.sh Scan -CxServer $CX_SERVER -CxUser $CX_USER -CxPassword $CX_PASSWORD -ProjectName "$CX_TEAM\\$CX_PROJECT_NAME-$BRANCH" -preset "$CX_PRESET" -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh $CX_HIGH -SASTMedium $CX_MEDIUM -SASTLow $CX_LOW -ReportXML $GITHUB_WORKSPACE/results.xml -ReportPDF $GITHUB_WORKSPACE/results.pdf -Comment "git $BRANCH@$GITHUB_SHA" -verbose
       env:
-        CX_SERVER: https://cxprivatecloud.checkmarx.net
-        CX_TEAM: \CxServer\SP\EMEA\__psteam
+        CX_SERVER: https://cxprivatecloud.checkmarx.net/
+        CX_TEAM: CxServer\SP\America\checkmarx.com - 4239	
         CX_PRESET: Checkmarx Default
-        CX_USER: Miguel.Freitas@checkmarx.com
+        CX_USER: ${{ secrets.CX_USER }}
         CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
-        CX_HIGH: 0
-        CX_MEDIUM: 0
-        CX_LOW: 0
+        #CX_HIGH: 0
+        #CX_MEDIUM: 0
+        #CX_LOW: 0
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@master
       with:
