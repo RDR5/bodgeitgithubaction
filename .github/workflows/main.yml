@@ -28,9 +28,9 @@ jobs:
         CX_PRESET: Checkmarx Default
         CX_USER: ${{ secrets.CX_USER }}
         CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
-        CX_HIGH: 0
-        CX_MEDIUM: 0
-        CX_LOW: 0
+        CX_HIGH: -1
+        CX_MEDIUM: -1
+        CX_LOW: -1
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@master
       with:
