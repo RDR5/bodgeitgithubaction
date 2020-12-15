@@ -13,22 +13,23 @@ jobs:
     steps:
     - name: Download 7zip
       run: wget -O ~/7zip.exe https://www.7-zip.org/a/7z1900-x64.exe
-    - name: Make 7zip executable
-      run: chmod +x ~/7z1900-x64.exe
+    - name: Install 7zip
+      run: ~/7z1900-x64.exe
     - name: Download CxCLI Zip
       run: wget -O ~/cxcli.zip https://download.checkmarx.com/8.9.0/Plugins/CxConsolePlugin-8.90.0.zip
     - name: Unzip CxCLI Zip
       #run: wzunzip ~/cxcli.zip -d ~/cxcli
       run: 7z x ~/cxcli.zip
-    - name: Make CxCLI executable
-      run: chmod +x ~/cxcli/runCxConsole.sh
+    #- name: Make CxCLI executable
+    #  run: chmod +x ~/cxcli/runCxConsole.sh
        
     - uses: actions/checkout@v1
     - name: Run Checkmarx Scan
       run: |
         export CX_PROJECT_NAME=$(basename "$GITHUB_REPOSITORY")
         export BRANCH=$(basename "$GITHUB_REF")
-        ~/cxcli/runCxConsole.sh Scan -CxServer $CX_SERVER -CxUser $CX_USER -CxPassword $CX_PASSWORD -ProjectName "$CX_TEAM\\$CX_PROJECT_NAME-$BRANCH" -preset "$CX_PRESET" -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh $CX_HIGH -SASTMedium $CX_MEDIUM -SASTLow $CX_LOW -ReportXML $GITHUB_WORKSPACE/results.xml -ReportPDF $GITHUB_WORKSPACE/results.pdf -Comment "git $BRANCH@$GITHUB_SHA" -verbose
+        #~/cxcli/runCxConsole.sh Scan -CxServer $CX_SERVER -CxUser $CX_USER -CxPassword $CX_PASSWORD -ProjectName "$CX_TEAM\\$CX_PROJECT_NAME-$BRANCH" -preset "$CX_PRESET" -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh $CX_HIGH -SASTMedium $CX_MEDIUM -SASTLow $CX_LOW -ReportXML $GITHUB_WORKSPACE/results.xml -ReportPDF $GITHUB_WORKSPACE/results.pdf -Comment "git $BRANCH@$GITHUB_SHA" -verbose
+        ~/cxcli/runCxConsole.cmd Scan -CxServer $CX_SERVER -CxUser $CX_USER -CxPassword $CX_PASSWORD -ProjectName "$CX_TEAM\\$CX_PROJECT_NAME-$BRANCH" -preset "$CX_PRESET" -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh $CX_HIGH -SASTMedium $CX_MEDIUM -SASTLow $CX_LOW -ReportXML $GITHUB_WORKSPACE/results.xml -ReportPDF $GITHUB_WORKSPACE/results.pdf -Comment "git $BRANCH@$GITHUB_SHA" -verbose
       env:
         CX_SERVER: https://cxprivatecloud.checkmarx.net/
         CX_TEAM: CxServer\SP\America\checkmarx.com - 4239	
