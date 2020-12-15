@@ -11,15 +11,16 @@ jobs:
     runs-on: [self-hosted, windows, x64]
     #runs-on: [self-hosted, linux, x64]
     steps:
-    - name: Download 7zip
-      run: wget -O ~/7zip.exe https://www.7-zip.org/a/7z1900-x64.exe
-    - name: Install 7zip
-      run: "start /wait (7z1900-x64.exe) /S"
+    #- name: Download 7zip
+    #  run: wget -O ~/7zip.exe https://www.7-zip.org/a/7z1900-x64.exe
+    #- name: Install 7zip
+    #  run: "start /wait (7z1900-x64.exe) /S"
     - name: Download CxCLI Zip
       run: wget -O ~/cxcli.zip https://download.checkmarx.com/8.9.0/Plugins/CxConsolePlugin-8.90.0.zip
     - name: Unzip CxCLI Zip
       #run: wzunzip ~/cxcli.zip -d ~/cxcli
-      run: 7z x .\cxcli.zip
+      #run: 7z x .\cxcli.zip
+      run: Expand-Archive -Path .\cxcli.zip -DestinationPath .\cxcli
     #- name: Make CxCLI executable
     #  run: chmod +x ~/cxcli/runCxConsole.sh
        
