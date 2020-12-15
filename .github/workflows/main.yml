@@ -8,7 +8,8 @@ jobs:
   checkmarx-cli-san:
     name: Run Checkmarx CLI Scan
     #runs-on: ubuntu-latest
-    runs-on: [self-hosted, windows, x64]
+    #runs-on: [self-hosted, windows, x64]
+    runs-on: [self-hosted, linux, x64]
     steps:
     - name: Download CxCLI Zip
       run: wget -O ~/cxcli.zip https://download.checkmarx.com/8.9.0/Plugins/CxConsolePlugin-8.90.0.zip
