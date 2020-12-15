@@ -29,9 +29,9 @@ jobs:
       run: |
         $CX_PROJECT_NAME=$("$GITHUB_REPOSITORY")
         $BRANCH=$("$GITHUB_REF")
-        $CX_SERVER= https://cxprivatecloud.checkmarx.net/
-        $CX_TEAM= CxServer\SP\America\checkmarx.com - 4239	
-        $CX_PRESET= Checkmarx Default
+        $CX_SERVER= "https://cxprivatecloud.checkmarx.net/"
+        $CX_TEAM= "CxServer\SP\America\checkmarx.com - 4239"
+        $CX_PRESET= "Checkmarx Default"
         $CX_USER= ${{ secrets.CX_USER }}
         $CX_PASSWORD= ${{ secrets.CX_PASSWORD }}
         $CX_HIGH= 1000
