@@ -17,7 +17,9 @@ jobs:
     #  run: "start /wait (7z1900-x64.exe) /S"
     - name: Download CxCLI Zip
       #run: wget -O ~/cxcli.zip https://download.checkmarx.com/8.9.0/Plugins/CxConsolePlugin-8.90.0.zip
-      run: Invoke-WebRequest -Uri https://download.checkmarx.com/9.0.0/Plugins/CxConsolePlugin-2020.4.4.zip -OutFile ./cxcli
+      run: |
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
+        Invoke-WebRequest -Uri https://download.checkmarx.com/9.0.0/Plugins/CxConsolePlugin-2020.4.4.zip -OutFile cxcli.zip
     - name: Unzip CxCLI Zip
       #run: wzunzip ~/cxcli.zip -d ~/cxcli
       #run: 7z x .\cxcli.zip
