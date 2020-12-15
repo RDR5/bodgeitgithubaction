@@ -14,7 +14,7 @@ jobs:
     - name: Download 7zip
       run: wget -O ~/7zip.exe https://www.7-zip.org/a/7z1900-x64.exe
     - name: Make 7zip executable
-      run: chmod +x ~/7zip.exe
+      run: chmod +x ~/7z1900-x64.exe
     - name: Download CxCLI Zip
       run: wget -O ~/cxcli.zip https://download.checkmarx.com/8.9.0/Plugins/CxConsolePlugin-8.90.0.zip
     - name: Unzip CxCLI Zip
