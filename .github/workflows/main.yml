@@ -35,7 +35,7 @@ jobs:
       run: |
         echo ${CX_SERVER}
         echo "runCxConsole.cmd Scan -CxServer "${CX_SERVER}" -CxUser "${{ secrets.CX_USER }}" -CxPassword "${{ secrets.CX_PASSWORD }}" -ProjectName "${CX_TEAM}\\${CX_PROJECT_NAME}-${BRANCH}" -preset "${CX_PRESET}" -LocationType folder -LocationPath "$GITHUB_WORKSPACE" -SASTHigh ${CX_HIGH} -SASTMedium ${CX_MEDIUM} -SASTLow ${CX_LOW} -ReportXML ${GITHUB_WORKSPACE}/results.xml -ReportPDF ${GITHUB_WORKSPACE}/results.pdf -Comment "git ${BRANCH}@$GITHUB_SHA" -verbose"
-        runCxConsole.cmd Scan -CxServer CX_SERVER -CxUser "${{ secrets.CX_USER }}" -CxPassword "${{ secrets.CX_PASSWORD }}" -ProjectName "${CX_TEAM}\\${CX_PROJECT_NAME}-${BRANCH}" -preset "${CX_PRESET}" -LocationType folder -LocationPath "$GITHUB_WORKSPACE" -SASTHigh ${CX_HIGH} -SASTMedium ${CX_MEDIUM} -SASTLow ${CX_LOW} -ReportXML ${GITHUB_WORKSPACE}/results.xml -ReportPDF ${GITHUB_WORKSPACE}/results.pdf -Comment "git ${BRANCH}@$GITHUB_SHA" -verbose
+        runCxConsole.cmd Scan -CxServer CX_SERVER -CxUser "${{ secrets.CX_USER }}" -CxPassword "${{ secrets.CX_PASSWORD }}" -ProjectName "${CX_TEAM}\\${CX_PROJECT_NAME}-${BRANCH}" -preset CX_PRESET -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh CX_HIGH -SASTMedium CX_MEDIUM -SASTLow CX_LOW -ReportXML ${GITHUB_WORKSPACE}/results.xml -ReportPDF ${GITHUB_WORKSPACE}/results.pdf -Comment "git ${BRANCH}@$GITHUB_SHA" -verbose
         
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@master
