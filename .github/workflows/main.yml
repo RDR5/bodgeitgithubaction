@@ -10,7 +10,8 @@ env:
   WORKSPACE: $("$GITHUB_WORKSPACE")
   SHA: $($"GITHUB_SHA")
   CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
-  CX_TEAM: ${{ secrets.CX_TEAM }}
+  #CX_TEAM: ${{ secrets.CX_TEAM }}
+  CX_TEAM: "CxServer/SP/America/checkmarx.com - 4239	"
   CX_PRESET: "Checkmarx Default"
   CX_USER: ${{ secrets.CX_USER }}
   CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
