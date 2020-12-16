@@ -4,6 +4,18 @@ on:
   push:
     branches:
       - master
+env:
+  CX_PROJECT_NAME: $("$GITHUB_REPOSITORY")
+  BRANCH: $("$GITHUB_REF")
+  CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
+  CX_TEAM: ${{ secrets.CX_TEAM }}
+  CX_PRESET: "Checkmarx Default"
+  CX_USER: ${{ secrets.CX_USER }}
+  CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
+  CX_HIGH: 1000
+  CX_MEDIUM: 1000
+  CX_LOW: 1000
+
 jobs:
   checkmarx-cli-san:
     name: Run Checkmarx CLI Scan
@@ -16,27 +28,15 @@ jobs:
       run: |
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
         Invoke-WebRequest -Uri https://download.checkmarx.com/9.0.0/Plugins/CxConsolePlugin-2020.4.4.zip -OutFile cxcli.zip
+      shell: powershell
     - name: Unzip CxCLI Zip
       run: Expand-Archive -Path .\cxcli.zip -DestinationPath .\cxcli
+      shell: powershell
            
     - uses: actions/checkout@v1
     - name: Run Checkmarx Scan
-      env:
-        CX_PROJECT_NAME: $("$GITHUB_REPOSITORY")
-        BRANCH: $("$GITHUB_REF")
-        CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
-        CX_TEAM: ${{ secrets.CX_TEAM }}
-        CX_PRESET: "Checkmarx Default"
-        CX_USER: ${{ secrets.CX_USER }}
-        CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
-        CX_HIGH: 1000
-        CX_MEDIUM: 1000
-        CX_LOW: 1000
-      run: |
-        echo ${CX_SERVER}
-        echo "runCxConsole.cmd Scan -CxServer "${CX_SERVER}" -CxUser "${{ secrets.CX_USER }}" -CxPassword "${{ secrets.CX_PASSWORD }}" -ProjectName "${CX_TEAM}\\${CX_PROJECT_NAME}-${BRANCH}" -preset "${CX_PRESET}" -LocationType folder -LocationPath "$GITHUB_WORKSPACE" -SASTHigh ${CX_HIGH} -SASTMedium ${CX_MEDIUM} -SASTLow ${CX_LOW} -ReportXML ${GITHUB_WORKSPACE}/results.xml -ReportPDF ${GITHUB_WORKSPACE}/results.pdf -Comment "git ${BRANCH}@$GITHUB_SHA" -verbose"
-        runCxConsole.cmd Scan -CxServer CX_SERVER -CxUser "${{ secrets.CX_USER }}" -CxPassword "${{ secrets.CX_PASSWORD }}" -ProjectName "${CX_TEAM}\\${CX_PROJECT_NAME}-${BRANCH}" -preset CX_PRESET -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh CX_HIGH -SASTMedium CX_MEDIUM -SASTLow CX_LOW -ReportXML ${GITHUB_WORKSPACE}/results.xml -ReportPDF ${GITHUB_WORKSPACE}/results.pdf -Comment "git ${BRANCH}@$GITHUB_SHA" -verbose
-        
+      run: runCxConsole.cmd Scan -CxServer %CX_SERVER% -CxUser ${{ secrets.CX_USER }} -CxPassword ${{ secrets.CX_PASSWORD }} -ProjectName "%CX_TEAM%\\%CX_PROJECT_NAME%-%BRANCH%" -preset %CX_PRESET% -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh %CX_HIGH% -SASTMedium %CX_MEDIUM% -SASTLow %CX_LOW% -ReportXML %${GITHUB_WORKSPACE}%\\results.xml -ReportPDF %${GITHUB_WORKSPACE}%\\results.pdf -Comment "git %BRANCH%@%$GITHUB_SHA%" -verbose
+      shell: cmd  
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@master
       with:
