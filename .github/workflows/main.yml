@@ -11,7 +11,7 @@ env:
   SHA: $($"GITHUB_SHA")
   CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
   #CX_TEAM: ${{ secrets.CX_TEAM }}
-  CX_TEAM: "CxServer/SP/America/checkmarx.com - 4239	"
+  CX_TEAM: "CxServer/SP/America/checkmarx.com-4239"
   CX_PRESET: "Checkmarx Default"
   CX_USER: ${{ secrets.CX_USER }}
   CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
@@ -36,7 +36,7 @@ jobs:
       run: Expand-Archive -Path .\cxcli.zip -DestinationPath .\cxcli
       shell: powershell
            
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Run Checkmarx Scan
       #run: runCxConsole.cmd Scan -CxServer %CX_SERVER% -CxUser ${{ secrets.CX_USER }} -CxPassword ${{ secrets.CX_PASSWORD }} -ProjectName "%CX_TEAM%\\%CX_PROJECT_NAME%-%BRANCH%" -preset %CX_PRESET% -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh %CX_HIGH% -SASTMedium %CX_MEDIUM% -SASTLow %CX_LOW% -ReportXML %${GITHUB_WORKSPACE}%\\results.xml -ReportPDF %${GITHUB_WORKSPACE}%\\results.pdf -Comment "git %BRANCH%@%$GITHUB_SHA%" -verbose
       #shell: cmd  
