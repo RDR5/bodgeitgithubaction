@@ -5,10 +5,6 @@ on:
     branches:
       - master
 env:
-  #CX_PROJECT_NAME: ${ GITHUB_REPOSITORY }
-  #BRANCH: ${ GITHUB_REF }
-  #WORKSPACE: ${ GITHUB_WORKSPACE }
-  #SHA: ${ GITHUB_SHA }
   CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
   #CX_TEAM: ${{ secrets.CX_TEAM }}
   CX_TEAM: 'CxServer/SP/America/NA-RR-PS'
@@ -24,25 +20,20 @@ jobs:
     name: Run Checkmarx CLI Scan
     #runs-on: ubuntu-latest
     runs-on: [self-hosted, windows, x64]
-    #runs-on: [self-hosted, linux, x64]
     steps:
     
-    - name: Download CxCLI Zip
-      run: |
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
-        Invoke-WebRequest -Uri https://download.checkmarx.com/9.0.0/Plugins/CxConsolePlugin-2020.4.4.zip -OutFile cxcli.zip
-      shell: powershell
-    - name: Unzip CxCLI Zip
-      run: Expand-Archive -Path .\cxcli.zip -DestinationPath .\cxcli
-      shell: powershell
+#    - name: Download CxCLI Zip
+#      run: |
+#        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
+#        Invoke-WebRequest -Uri https://download.checkmarx.com/9.0.0/Plugins/CxConsolePlugin-2020.4.4.zip -OutFile cxcli.zip
+#      shell: powershell
+#    - name: Unzip CxCLI Zip
+#      run: Expand-Archive -Path .\cxcli.zip -DestinationPath .\cxcli
+#      shell: powershell
            
     - uses: actions/checkout@v2
     - name: Run Checkmarx Scan
-      #run: runCxConsole.cmd Scan -CxServer %CX_SERVER% -CxUser ${{ secrets.CX_USER }} -CxPassword ${{ secrets.CX_PASSWORD }} -ProjectName "%CX_TEAM%\\%CX_PROJECT_NAME%-%BRANCH%" -preset %CX_PRESET% -LocationType folder -LocationPath $GITHUB_WORKSPACE -SASTHigh %CX_HIGH% -SASTMedium %CX_MEDIUM% -SASTLow %CX_LOW% -ReportXML %${GITHUB_WORKSPACE}%\\results.xml -ReportPDF %${GITHUB_WORKSPACE}%\\results.pdf -Comment "git %BRANCH%@%$GITHUB_SHA%" -verbose
-      #shell: cmd  
-      #run: runCxConsole.cmd Scan -CxServer $env:CX_SERVER -CxUser $env:CX_USER -CxPassword $env:CX_PASSWORD -ProjectName "$env:CX_TEAM\\$env:CX_PROJECT_NAME-$env:BRANCH" -preset $env:CX_PRESET -LocationType folder -LocationPath $env:WORKSPACE -SASTHigh $env:CX_HIGH -SASTMedium $env:CX_MEDIUM -SASTLow $env:CX_LOW -ReportXML $env:WORKSPACE\\results.xml -ReportPDF $env:WORKSPACE\\results.pdf -Comment "git $env:BRANCH@$env:SHA" -verbose
-      #run: runCxConsole.cmd Scan -CxServer $env:CX_SERVER -CxUser $env:CX_USER -CxPassword $env:CX_PASSWORD -ProjectName "$env:CX_TEAM/$env:CX_PROJECT_NAME-$env:BRANCH" -preset $env:CX_PRESET -LocationType folder -LocationPath $env:WORKSPACE -SASTHigh $env:CX_HIGH -SASTMedium $env:CX_MEDIUM -SASTLow $env:CX_LOW -ReportXML $env:WORKSPACE\\results.xml -ReportPDF $env:WORKSPACE\\results.pdf -Comment "git $env:BRANCH@$env:SHA" -verbose
-      run: runCxConsole.cmd Scan -CxServer $env:CX_SERVER -CxUser $env:CX_USER -CxPassword $env:CX_PASSWORD -ProjectName "$env:CX_TEAM/$env:GITHUB_REPOSITORY" -preset $env:CX_PRESET -LocationType folder -LocationPath $env:GITHUB_WORKSPACE -SASTHigh $env:CX_HIGH -SASTMedium $env:CX_MEDIUM -SASTLow $env:CX_LOW -ReportXML $env:GITHUB_WORKSPACE\\results.xml -ReportPDF $env:GITHUB_WORKSPACE\\results.pdf -Comment "git $env:GITHUB_REFH@$env:GITHUB_SHA" -verbose
+      run: C:\CxConsole\runCxConsole.cmd Scan -CxServer $env:CX_SERVER -CxUser $env:CX_USER -CxPassword $env:CX_PASSWORD -ProjectName "$env:CX_TEAM/$env:GITHUB_REPOSITORY" -preset $env:CX_PRESET -LocationType folder -LocationPath $env:GITHUB_WORKSPACE -SASTHigh $env:CX_HIGH -SASTMedium $env:CX_MEDIUM -SASTLow $env:CX_LOW -ReportXML $env:GITHUB_WORKSPACE\\results.xml -ReportPDF $env:GITHUB_WORKSPACE\\results.pdf -Comment "git $env:GITHUB_REFH@$env:GITHUB_SHA" -verbose
       shell: powershell
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@master
