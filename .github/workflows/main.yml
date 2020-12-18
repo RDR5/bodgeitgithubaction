@@ -5,10 +5,10 @@ on:
     branches:
       - master
 env:
-  CX_PROJECT_NAME: ${{ GITHUB_REPOSITORY }}
-  BRANCH: ${{ GITHUB_REF }}
-  WORKSPACE: ${{ GITHUB_WORKSPACE }}
-  SHA: ${{ GITHUB_SHA }}
+  CX_PROJECT_NAME: ${ GITHUB_REPOSITORY }
+  BRANCH: ${ GITHUB_REF }
+  WORKSPACE: ${ GITHUB_WORKSPACE }
+  SHA: ${ GITHUB_SHA }
   CX_SERVER: "https://cxprivatecloud.checkmarx.net/"
   #CX_TEAM: ${{ secrets.CX_TEAM }}
   CX_TEAM: 'CxServer/SP/America/NA-RR-PS'
